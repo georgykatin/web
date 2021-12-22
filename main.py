@@ -1,4 +1,4 @@
-from os import abort
+from flask import abort
 from flask import Flask, render_template, request
 import psycopg2
 from psycopg2 import OperationalError
@@ -53,6 +53,7 @@ def recording_in_db(name, surname, phone_number):
     connection = create_connection('database1', 'postgres', 'xlr22856', '127.0.0.1', '5433')
     insert_query = (
         f"INSERT INTO table1 (name, surname, phone_number) VALUES ('{name}', '{surname}', '{phone_number}')")
+    print(insert_query)
     cursor = connection.cursor()
     cursor.execute(insert_query)
     connection.commit()
@@ -76,8 +77,7 @@ def list_of_users():
         user_list.append(
             {'username': val[0] + val[1], 'name': val[0], 'surname': val[1], 'phone_number': val[2]})
     return user_list
-
-    create_connection('database1', 'postgres', 'xlr22856', '127.0.0.1', '5433')
+print(list_of_users())
 
 
 app = Flask(__name__)
@@ -95,7 +95,7 @@ def index1():
 
 @app.route('/name/<name>', methods=['get'])
 def name_page(name):
-    return render_template('index.html', username=name)
+    return render_template('new.html', username=name)
 
 
 @app.route('/users/', methods=['get', 'post'])
@@ -106,30 +106,30 @@ def users():
         phone_number = request.form.get('phone_number')
         if not being_in_db(f'{name} {surname} {phone_number}'):
             recording_in_db(name, surname, phone_number)
-    return render_template('new.html', table1=list_of_users())
+    return render_template('new.html', users=list_of_users())
 
 
-@app.route('/users')
-def user():
-    tt = ''
-    for i in list_of_users():
-        t = '<a href="http://127.0.0.1:5000/users/%s"> %s %s</a><br>' % (
-            i['username'], i['name'], i['surname'], i['phone_number'],)
-        tt += t
-    return tt
+# #@app.route('/users/<username>')
+# #def user():
+#     tt = ''
+#     for i in list_of_users():
+#         t = '<a href="http://127.0.0.1:5000/users/%s"> %s %s</a><br>' % (
+#             i['username'], i['name'], i['surname'], i['phone_number'],)
+#         tt += t
+#     return tt
 
 
 @app.route('/users/<username>')
 def look(username):
     users = ''
-    flag = []
-    for i in list_of_users():
-        if username != ['username']:
-            flag.append(False)
-        else:
-            flag.append(True)
-    if any(flag) == False:
-        abort(404)
+    # flag = []
+    # for i in list_of_users():
+    #     if username != ['username']:
+    #         flag.append(False)
+    #     else:
+    #         flag.append(True)
+    # if any(flag) == False:
+    #     abort(404)
     for i in list_of_users():
         if username == i['username']:
             users = i
