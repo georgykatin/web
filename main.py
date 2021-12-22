@@ -109,28 +109,11 @@ def users():
     return render_template('new.html', users=list_of_users())
 
 
-# #@app.route('/users/<username>')
-# #def user():
-#     tt = ''
-#     for i in list_of_users():
-#         t = '<a href="http://127.0.0.1:5000/users/%s"> %s %s</a><br>' % (
-#             i['username'], i['name'], i['surname'], i['phone_number'],)
-#         tt += t
-#     return tt
-
 
 @app.route('/users/<username>')
 def look(username):
     users = ''
-    # flag = []
-    # for i in list_of_users():
-    #     if username != ['username']:
-    #         flag.append(False)
-    #     else:
-    #         flag.append(True)
-    # if any(flag) == False:
-    #     abort(404)
-    for i in list_of_users():
+      for i in list_of_users():
         if username == i['username']:
             users = i
     return f'<h2>UserName:{users["username"]} </h2> <br>' \
