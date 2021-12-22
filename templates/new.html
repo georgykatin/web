@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Страница записи</title>
+</head>
+<body bgcolor="#FFF8DC">
+<h1>User list:</h1>
+<ul>
+{% for user in users %}
+    <li><a href="http://127.0.0.1:5000/users/{{ user['username'] }}">{{ user['name'] }} {{ user['surname'] }}</a><br></li>
+{% endfor %}
+</ul>
+<form action="" method="post">
+    <p>
+        <label for='name'>Name</label>
+        <input type="text" name="name">
+    </p>
+    <p>
+        <label for="surname">Surname</label>
+        <input type="text" name="surname">
+    </p>
+    <p>
+        <label for="phone_number">Telephone</label>
+        <input type="text" name="phone_number">
+    </p>
+
+    <p>
+        <input type="submit" name="Подтвердить">
+    </p>
+</form>
+</body>
+</html>
