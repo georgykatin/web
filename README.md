@@ -1,1 +1,1 @@
-Simple flask web application
+Simple python flask web application
